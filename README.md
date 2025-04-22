@@ -21,7 +21,7 @@ The tool is provided as a UPM (Unity Package Manager) package, to install it, na
 
 ![image](https://github.com/user-attachments/assets/fa92bfeb-38bc-420c-b781-43982ccf6544)
 
-Then enter the following URL "https://github.com/Moe-Baker/Item-Icon-Creator.git" and click install
+Then enter the following URL https://github.com/Moe-Baker/Item-Icon-Creator.git and click install
 
 ![image](https://github.com/user-attachments/assets/fe44d895-1abc-4c3a-b251-85decd827c67)
 
