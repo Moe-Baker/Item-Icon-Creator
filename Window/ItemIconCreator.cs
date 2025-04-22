@@ -328,6 +328,14 @@ public class ItemIconCreator : EditorWindow
 
     void CreateGUI()
     {
+        EntriesList = FindAllPreviewItems();
+
+        if (EntriesList.Count is 0)
+        {
+            rootVisualElement.Add(new HelpBox("NO Preview Items Found in Project, Try Importing the Sample Items to Start", HelpBoxMessageType.Warning));
+            return;
+        }
+
         Preferences.IO.Load();
 
         AssemblyReloadEvents.beforeAssemblyReload += BeforeAssemblyReloadEvent;
@@ -335,8 +343,6 @@ public class ItemIconCreator : EditorWindow
         VisualTreeAsset.CloneTree(rootVisualElement);
 
         UI = new UIElements(rootVisualElement);
-
-        EntriesList = FindAllPreviewItems();
 
         UI.Entries.itemsSource = EntriesList;
         UI.Entries.selectedIndicesChanged += EntrySelectionChanged;
