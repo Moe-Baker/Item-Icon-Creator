@@ -10,12 +10,14 @@ The tool will automatically find compatible assets (ScriptableObjects inheriting
 
 ![image](https://github.com/user-attachments/assets/f9c6feae-28fd-4db4-aca3-7385d964e71a)
 
-The tool will automatically create and assign sprite references when the 'Take Shot' button is clicked, it might also delete old sprites if they are incompatible. 
+The tool will automatically create and assign sprite references when the 'Take Shot' button is clicked, it might also delete old sprites if they are incompatible.
+
+The tool will also save your custom preview options (camera distance, pivot offset, ... etc) per asset to make updating old icons easier, the options will be saved to "ProjectSettings/Item-Icon-Creator.json" and should be included in source control.
 
 # Script Implementation
 
-The tool will automatiically scan your project for ScriptableObject instances implementing the `IPreviewItem` interface.
-To register a custom asset, just simply have your scriptable objects implement the `IPreviewItem` interface and the tool will take care of the rest.
+The tool will automatically scan your project for ScriptableObject instances implementing the `IPreviewItem` interface.
+To register a custom asset, simply have your scriptable objects implement the `IPreviewItem` interface and the tool will take care of the rest.
 
 # Installation Steps
 
