@@ -17,7 +17,7 @@ using Object = UnityEngine.Object;
 
 public class ItemIconCreator : EditorWindow
 {
-    [MenuItem("Tools/" + ToolTitle)]
+    [MenuItem("Window/" + ToolTitle)]
     public static void ShowExample()
     {
         var window = GetWindow<ItemIconCreator>();
