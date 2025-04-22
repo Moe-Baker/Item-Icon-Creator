@@ -1,13 +1,13 @@
 {
   "name": "com.t4games.item-icon-creator",
   "displayName": "Item Icon Creator",
-  "version": "1",
+  "version": "1.0.0",
   "unity": "2019.1",
   "description": "Allows quickly creating icons for items fronm prefabs.",
   "keywords": [
     "prefab",
     "icon",
-	"sprite"
+    "sprite"
   ],
   "documentationUrl": "https://github.com/Moe-Baker/Item-Icon-Creator",
   "repository": {
@@ -16,9 +16,14 @@
   },
   "samples": [
     {
-      "displayName": "Item Samples",
+      "displayName": "Example Items",
       "description": "Showcases an implementation of an item as a Scriptable Object",
-      "path": "Samples~"
+      "path": "Samples~/Example Items"
+    },
+    {
+      "displayName": "Override Preview Scene",
+      "description": "Showcases the ability to override the preview scene using the asset label 'Item-Icon-Preview-Scene'",
+      "path": "Samples~/Override Preview Scene"
     }
   ]
 }
