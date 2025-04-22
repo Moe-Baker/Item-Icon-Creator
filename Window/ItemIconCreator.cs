@@ -44,6 +44,7 @@ public class ItemIconCreator : EditorWindow
         public Vector3Field PivotOffset { get; }
         public Vector3Field PivotRotation { get; }
 
+        public Toggle ShotTransparent { get; }
         public Button TakeShot { get; }
 
         public UIElements(VisualElement tree)
@@ -57,6 +58,7 @@ public class ItemIconCreator : EditorWindow
             PivotOffset = tree.Q<Vector3Field>("Pivot-Offset");
             PivotRotation = tree.Q<Vector3Field>("Pivot-Rotation");
 
+            ShotTransparent = tree.Q<Toggle>("Shot-Transparent");
             TakeShot = tree.Q<Button>("Take-Shot");
         }
     }
@@ -96,6 +98,8 @@ public class ItemIconCreator : EditorWindow
         {
             var path = Path.Combine(GetToolDirectoryPath(), PreviewScenePath);
 
+            path = path.Replace('\\', '/');
+
             return EditorSceneManager.OpenPreviewScene(path);
         }
     }
@@ -119,10 +123,11 @@ public class ItemIconCreator : EditorWindow
             PreviewCamera.transform.localPosition = position;
         }
     }
-    void SetCameraTransparency(bool transparent)
+    void SetCameraTransparency(bool transparent, bool preview)
     {
         PreviewCamera.clearFlags = transparent ? CameraClearFlags.Color : CameraClearFlags.Skybox;
-        PreviewCamera.backgroundColor = transparent ? new Color(0, 0, 0, 0) : Color.white;
+
+        PreviewCamera.backgroundColor = transparent ? new Color(0, 0, 0, preview ? 1 : 0) : Color.white;
     }
 
     Transform PreviewPivot => PreviewCamera.transform.parent;
@@ -153,6 +158,8 @@ public class ItemIconCreator : EditorWindow
 
             public OptionalValue<Vector3> PivotRotation;
             public Vector3 GetPivotRotation() => PivotRotation.Evaluate(Defaults.PivotRotation);
+
+            public OptionalValue<bool> Transparent;
         }
 
         [Serializable]
@@ -286,6 +293,19 @@ public class ItemIconCreator : EditorWindow
 
             return true;
         }
+        public static bool TrySetTransparent(IPreviewItem target, bool value)
+        {
+            if (TryGetGUID(target, out var guid) is false)
+                return false;
+
+            IsDirty = true;
+
+            var data = EntryPreviews.GetValueOrDefault(guid);
+            data.Transparent = new(value);
+            EntryPreviews[guid] = data;
+
+            return true;
+        }
 
         public static bool TryGetGUID(IPreviewItem target, out string id)
         {
@@ -330,6 +350,9 @@ public class ItemIconCreator : EditorWindow
             UI.PivotOffset.RegisterValueChangedCallback(PivotOffsetChanged);
             UI.PivotRotation.RegisterValueChangedCallback(PivotRotationChanged);
         }
+
+        UI.ShotTransparent.RegisterValueChangedCallback(ShotTransparentChange);
+        SetCameraTransparency(UI.ShotTransparent.value, preview: true);
 
         UI.TakeShot.clicked += TakeShotAction;
     }
@@ -390,24 +413,33 @@ public class ItemIconCreator : EditorWindow
             CameraDistance = UI.CameraDistance.value = data.GetCameraDistance();
             PivotOffset = UI.PivotOffset.value = data.GetPivotOffset();
             PivotRotation = UI.PivotRotation.value = data.GetPivotRotation();
+
+            if (data.Transparent.Assigned)
+                UI.ShotTransparent.value = data.Transparent.Value;
         }
     }
 
     #region Controls
-    void PivotOffsetChanged(ChangeEvent<Vector3> change)
+    void PivotOffsetChanged(ChangeEvent<Vector3> evt)
     {
-        Preferences.TrySetPivotOffset(SelectedEntry, change.newValue);
-        PivotOffset = change.newValue;
+        Preferences.TrySetPivotOffset(SelectedEntry, evt.newValue);
+        PivotOffset = evt.newValue;
     }
-    void PivotRotationChanged(ChangeEvent<Vector3> change)
+    void PivotRotationChanged(ChangeEvent<Vector3> evt)
     {
-        Preferences.TrySetPivotRotation(SelectedEntry, change.newValue);
-        PivotRotation = change.newValue;
+        Preferences.TrySetPivotRotation(SelectedEntry, evt.newValue);
+        PivotRotation = evt.newValue;
     }
-    void CameraDistanceChanged(ChangeEvent<float> change)
+    void CameraDistanceChanged(ChangeEvent<float> evt)
     {
-        Preferences.TrySetCameraDistance(SelectedEntry, change.newValue);
-        CameraDistance = change.newValue;
+        Preferences.TrySetCameraDistance(SelectedEntry, evt.newValue);
+        CameraDistance = evt.newValue;
+    }
+
+    void ShotTransparentChange(ChangeEvent<bool> evt)
+    {
+        Preferences.TrySetTransparent(SelectedEntry, evt.newValue);
+        SetCameraTransparency(evt.newValue, preview: true);
     }
 
     void TakeShotAction()
@@ -416,7 +448,7 @@ public class ItemIconCreator : EditorWindow
 
         EnsureDirectoryExists(path);
 
-        SetCameraTransparency(transparent: true);
+        SetCameraTransparency(UI.ShotTransparent.value, preview: false);
         PreviewCamera.Render();
 
         RenderTexture.active = PreviewTexture;
@@ -455,7 +487,7 @@ public class ItemIconCreator : EditorWindow
         {
             DestroyImmediate(mediator);
 
-            SetCameraTransparency(transparent: false);
+            SetCameraTransparency(UI.ShotTransparent.value, preview: true);
             PreviewCamera.Render();
         }
     }

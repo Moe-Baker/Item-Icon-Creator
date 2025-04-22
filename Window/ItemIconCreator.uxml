@@ -1,5 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/Item%20Icon%20Creator/Window/ItemIconCreator.uss?fileID=7433441132597879392&amp;guid=532669918cb7b5945a481a64185acece&amp;type=3#ItemIconCreator" />
+    <Style src="project://database/Assets/Item-Icon-Creator/Window/ItemIconCreator.uss?fileID=7433441132597879392&amp;guid=532669918cb7b5945a481a64185acece&amp;type=3#ItemIconCreator" />
     <engine:VisualElement name="VisualElement" style="position: relative; flex-direction: row; height: auto; flex-grow: 1; width: auto; max-width: none; max-height: none;">
         <engine:ListView name="Entries" allow-add="false" allow-remove="false" show-add-remove-footer="false" show-foldout-header="false" show-border="false" show-bound-collection-size="false" show-alternating-row-backgrounds="None" selection-type="Single" header-title="Entries" style="width: 180px; background-color: rgb(43, 43, 43); color: rgb(255, 255, 255); align-content: stretch; border-left-width: 0; border-top-width: 0; border-bottom-width: 0; border-right-width: 0; border-top-left-radius: 0; border-top-right-radius: 0;" />
         <engine:VisualElement name="Content" style="flex-grow: 1; background-color: rgb(36, 36, 36);">
@@ -8,7 +8,10 @@
                 <engine:FloatField label="Camera Distance" value="10" name="Camera-Distance" enabled="true" password="false" />
                 <engine:Vector3Field label="Pivot Offset" name="Pivot-Offset" />
                 <engine:Vector3Field label="Pivot Rotation" name="Pivot-Rotation" style="background-color: rgba(255, 255, 255, 0);" />
-                <engine:Button text="Take Shot" name="Take-Shot" style="width: 80px; align-self: center; margin-top: 10px; margin-bottom: 0;" />
+                <engine:VisualElement name="Row" style="flex-grow: 1; flex-direction: row; align-self: center; margin-top: 10px;">
+                    <engine:Toggle label="Transparent" enabled="true" value="false" name="Shot-Transparent" style="margin-right: 10px;" />
+                    <engine:Button text="Take Shot" name="Take-Shot" style="width: 80px; align-self: center; margin-top: 0; margin-bottom: 0;" />
+                </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
