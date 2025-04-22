@@ -1,0 +1,24 @@
+{
+  "name": "com.t4games.item-icon-creator",
+  "displayName": "Item Icon Creator",
+  "version": "1",
+  "unity": "2019.1",
+  "description": "Allows quickly creating icons for items fronm prefabs.",
+  "keywords": [
+    "prefab",
+    "icon",
+	"sprite"
+  ],
+  "documentationUrl": "https://github.com/Moe-Baker/Item-Icon-Creator",
+  "repository": {
+    "url": "https://github.com/Moe-Baker/Item-Icon-Creator",
+    "type": "git"
+  },
+  "samples": [
+    {
+      "displayName": "Item Samples",
+      "description": "Showcases an implementation of an item as a Scriptable Object",
+      "path": "Samples~"
+    }
+  ]
+}
