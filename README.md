@@ -33,6 +33,8 @@ Then enter the following URL https://github.com/Moe-Baker/Item-Icon-Creator.git 
 
 The tool comes with two samples.
 
+![image](https://github.com/user-attachments/assets/6de6517f-acf2-4932-a054-46b0ec4f2846)
+
 1. Example Items:
 - This sample showcases an implementation of sample items (scriptable objects + prefab) to quickly allow inspecting the tool.
 
